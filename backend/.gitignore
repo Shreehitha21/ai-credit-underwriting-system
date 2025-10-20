@@ -8,16 +8,9 @@ __pycache__/
 
 # Secrets - DO NOT UPLOAD
 .env
-backend/.env
 
-# Database file - DO NOT UPLOAD
+# Local database file - DO NOT UPLOAD
 database.db
-backend/database.db
-
-# User-generated files - DO NOT UPLOAD
-backend/uploads/
-backend/reports/
-backend/models_trained/
 
 # IDE and editor folders
 .vscode/
