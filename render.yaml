@@ -3,7 +3,7 @@
 
 services:
   # 1. The PostgreSQL Database Service
-  - type: psql
+  - type: psql # THIS IS THE FIX: The correct type is 'psql'
     name: ai-credit-db
     plan: free # Use Render's free tier for the database
 
@@ -22,7 +22,7 @@ services:
         value: 3.11.0
       - key: DATABASE_URL
         fromService:
-          type: psql
+          type: psql # THIS IS THE SECOND FIX: This must also be 'psql'
           name: ai-credit-db # Automatically get the database connection string
           property: connectionString
       - fromGroup: ai-credit-secrets # Pull in your secret keys from an Environment Group
@@ -31,7 +31,6 @@ services:
   - type: staticSite
     name: ai-credit-frontend
     rootDir: web_frontend # Tell Render to look inside the 'web_frontend' folder
-    # Add rewrite rules to ensure all pages (login, customer, admin) work correctly
     routes:
       - type: rewrite
         source: /login.html
@@ -52,24 +51,19 @@ envVarGroups:
     envVars:
       - key: SECRET_KEY
         # IMPORTANT: You must set this value in the Render dashboard
-        # It should be a long, random string.
         value: "your_super_secret_key_here"
-      # You can also add your Cloudinary keys here if you choose to use them
-      # - key: CLOUDINARY_CLOUD_NAME
-      #   value: "your_cloudinary_name"
-      # - key: CLOUDINARY_API_KEY
-      #   value: "your_cloudinary_key"
-      # - key: CLOUDINARY_API_SECRET
-      #   value: "your_cloudinary_secret"
 ```
 
-### Final Deployment Steps
+### Next Steps
 
-Now that you have this file, the deployment process is incredibly simple:
+Now that the file is corrected, you just need to update it on GitHub to trigger a new deployment on Render.
 
-1.  **Commit and Push:** Add the `render.yaml` file to your GitHub repository.
+1.  **Save the changes** to your `render.yaml` file in VS Code.
+2.  **Go to your terminal** in the project's root directory.
+3.  **Run these commands** to upload the fix:
     ```bash
     git add render.yaml
-    git commit -m "Add Render deployment blueprint"
+    git commit -m "Fix: Correct database type to 'psql' in render.yaml"
     git push origin main
     
+
