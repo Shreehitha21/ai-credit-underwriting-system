@@ -1,0 +1,75 @@
+# This file is a blueprint that tells Render how to build and deploy your entire application.
+# It defines three services: a PostgreSQL database, a Python backend, and a static frontend.
+
+services:
+  # 1. The PostgreSQL Database Service
+  - type: psql
+    name: ai-credit-db
+    plan: free # Use Render's free tier for the database
+
+  # 2. The Python Backend Service (FastAPI)
+  - type: web
+    name: ai-credit-backend
+    runtime: python
+    plan: free # Use Render's free tier for the web service
+    rootDir: backend # Tell Render to look inside the 'backend' folder
+    buildCommand: |
+      pip install -r requirements.txt &&
+      apt-get update && apt-get install -y tesseract-ocr
+    startCommand: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromService:
+          type: psql
+          name: ai-credit-db # Automatically get the database connection string
+          property: connectionString
+      - fromGroup: ai-credit-secrets # Pull in your secret keys from an Environment Group
+
+  # 3. The Static Frontend Service (HTML/CSS/JS)
+  - type: staticSite
+    name: ai-credit-frontend
+    rootDir: web_frontend # Tell Render to look inside the 'web_frontend' folder
+    # Add rewrite rules to ensure all pages (login, customer, admin) work correctly
+    routes:
+      - type: rewrite
+        source: /login.html
+        destination: /login.html
+      - type: rewrite
+        source: /customer.html
+        destination: /customer.html
+      - type: rewrite
+        source: /admin.html
+        destination: /admin.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# This section defines how Render should handle your secret keys
+envVarGroups:
+  - name: ai-credit-secrets
+    envVars:
+      - key: SECRET_KEY
+        # IMPORTANT: You must set this value in the Render dashboard
+        # It should be a long, random string.
+        value: "your_super_secret_key_here"
+      # You can also add your Cloudinary keys here if you choose to use them
+      # - key: CLOUDINARY_CLOUD_NAME
+      #   value: "your_cloudinary_name"
+      # - key: CLOUDINARY_API_KEY
+      #   value: "your_cloudinary_key"
+      # - key: CLOUDINARY_API_SECRET
+      #   value: "your_cloudinary_secret"
+```
+
+### Final Deployment Steps
+
+Now that you have this file, the deployment process is incredibly simple:
+
+1.  **Commit and Push:** Add the `render.yaml` file to your GitHub repository.
+    ```bash
+    git add render.yaml
+    git commit -m "Add Render deployment blueprint"
+    git push origin main
+    
