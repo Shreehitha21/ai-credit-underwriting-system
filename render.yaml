@@ -54,18 +54,3 @@ envVarGroups:
         # IMPORTANT: You must set this value in the Render dashboard
         # It should be a long, random string.
         value: "your_super_secret_key_here"
-```
-
-### Next Steps
-
-Now that the file has the correct syntax, you just need to update it on GitHub to trigger a new deployment on Render.
-
-1.  **Save the changes** to your `render.yaml` file in VS Code.
-2.  **Go to your terminal** in the project's root directory.
-3.  **Run these commands** to upload the fix:
-    ```bash
-    git add render.yaml
-    git commit -m "Fix: Correct indentation in render.yaml"
-    git push origin main
-    
-
