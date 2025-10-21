@@ -1,9 +1,9 @@
-# This file is a blueprint that tells Render how to build and deploy your entire application.
-# It now correctly separates the database definition from the application services.
+# This is the final, corrected blueprint for Render.
+# It separates the database definition from the application services.
 
 databases:
   # 1. The PostgreSQL Database Service
-  # This is now defined in its own top-level 'databases' section.
+  # This is now correctly defined in its own top-level 'databases' section.
   - name: ai-credit-db
     plan: free # Use Render's free tier for the database
 
@@ -12,8 +12,8 @@ services:
   - type: web
     name: ai-credit-backend
     runtime: python
-    plan: free # Use Render's free tier for the web service
-    rootDir: backend # Tell Render to look inside the 'backend' folder
+    plan: free
+    rootDir: backend
     buildCommand: |
       pip install -r requirements.txt &&
       apt-get update && apt-get install -y tesseract-ocr
@@ -24,15 +24,14 @@ services:
       - key: DATABASE_URL
         fromService:
           type: psql # When referencing the database, 'psql' is the correct type.
-          name: ai-credit-db # Automatically get the database connection string
+          name: ai-credit-db
           property: connectionString
-      - fromGroup: ai-credit-secrets # Pull in your secret keys from an Environment Group
+      - fromGroup: ai-credit-secrets
 
   # 3. The Static Frontend Service (HTML/CSS/JS)
   - type: staticSite
     name: ai-credit-frontend
-    rootDir: web_frontend # Tell Render to look inside the 'web_frontend' folder
-    # Add rewrite rules to ensure all pages (login, customer, admin) work correctly
+    rootDir: web_frontend
     routes:
       - type: rewrite
         source: /login.html
@@ -47,12 +46,24 @@ services:
         source: /*
         destination: /index.html
 
-# This section defines how Render should handle your secret keys
+# This section remains the same.
 envVarGroups:
   - name: ai-credit-secrets
     envVars:
       - key: SECRET_KEY
-        # IMPORTANT: You must set this value in the Render dashboard
-        # It should be a long, random string.
         value: "your_super_secret_key_here"
+```
+
+### Next Steps
+
+Now that you have the final, correct file, please follow these steps to deploy your application:
+
+1.  **Replace the entire content** of your local `render.yaml` file with the code above.
+2.  **Save the file.**
+3.  **Push the final version** to your GitHub repository:
+    ```bash
+    git add render.yaml
+    git commit -m "Final fix for render.yaml structure"
+    git push origin main
+    
 
