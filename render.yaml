@@ -52,18 +52,3 @@ envVarGroups:
     envVars:
       - key: SECRET_KEY
         value: "your_super_secret_key_here"
-```
-
-### Next Steps
-
-Now that you have the final, correct file, please follow these steps to deploy your application:
-
-1.  **Replace the entire content** of your local `render.yaml` file with the code above.
-2.  **Save the file.**
-3.  **Push the final version** to your GitHub repository:
-    ```bash
-    git add render.yaml
-    git commit -m "Final fix for render.yaml structure"
-    git push origin main
-    
-
