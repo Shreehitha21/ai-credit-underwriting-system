@@ -16,4 +16,4 @@ python-socketio
 opencv-python-headless
 gunicorn
 psycopg2-binary
-
+pdfplumber
