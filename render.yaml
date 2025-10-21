@@ -3,7 +3,7 @@
 
 services:
   # 1. The PostgreSQL Database Service
-  - type: psql # THIS IS THE FIX: The correct type is 'psql'
+  - type: psql
     name: ai-credit-db
     plan: free # Use Render's free tier for the database
 
@@ -22,7 +22,7 @@ services:
         value: 3.11.0
       - key: DATABASE_URL
         fromService:
-          type: psql # THIS IS THE SECOND FIX: This must also be 'psql'
+          type: psql
           name: ai-credit-db # Automatically get the database connection string
           property: connectionString
       - fromGroup: ai-credit-secrets # Pull in your secret keys from an Environment Group
@@ -31,6 +31,7 @@ services:
   - type: staticSite
     name: ai-credit-frontend
     rootDir: web_frontend # Tell Render to look inside the 'web_frontend' folder
+    # Add rewrite rules to ensure all pages (login, customer, admin) work correctly
     routes:
       - type: rewrite
         source: /login.html
@@ -51,19 +52,20 @@ envVarGroups:
     envVars:
       - key: SECRET_KEY
         # IMPORTANT: You must set this value in the Render dashboard
+        # It should be a long, random string.
         value: "your_super_secret_key_here"
 ```
 
 ### Next Steps
 
-Now that the file is corrected, you just need to update it on GitHub to trigger a new deployment on Render.
+Now that the file has the correct syntax, you just need to update it on GitHub to trigger a new deployment on Render.
 
 1.  **Save the changes** to your `render.yaml` file in VS Code.
 2.  **Go to your terminal** in the project's root directory.
 3.  **Run these commands** to upload the fix:
     ```bash
     git add render.yaml
-    git commit -m "Fix: Correct database type to 'psql' in render.yaml"
-    git push --force origin main
+    git commit -m "Fix: Correct indentation in render.yaml"
+    git push origin main
     
 
