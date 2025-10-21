@@ -64,6 +64,6 @@ Now that the file is corrected, you just need to update it on GitHub to trigger 
     ```bash
     git add render.yaml
     git commit -m "Fix: Correct database type to 'psql' in render.yaml"
-    git push origin main
+    git push --force origin main
     
 
