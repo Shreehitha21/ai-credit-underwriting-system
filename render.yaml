@@ -1,12 +1,13 @@
 # This file is a blueprint that tells Render how to build and deploy your entire application.
-# It defines three services: a PostgreSQL database, a Python backend, and a static frontend.
+# It now correctly separates the database definition from the application services.
 
-services:
+databases:
   # 1. The PostgreSQL Database Service
-  - type: psql
-    name: ai-credit-db
+  # This is now defined in its own top-level 'databases' section.
+  - name: ai-credit-db
     plan: free # Use Render's free tier for the database
 
+services:
   # 2. The Python Backend Service (FastAPI)
   - type: web
     name: ai-credit-backend
@@ -22,7 +23,7 @@ services:
         value: 3.11.0
       - key: DATABASE_URL
         fromService:
-          type: psql
+          type: psql # When referencing the database, 'psql' is the correct type.
           name: ai-credit-db # Automatically get the database connection string
           property: connectionString
       - fromGroup: ai-credit-secrets # Pull in your secret keys from an Environment Group
@@ -54,3 +55,4 @@ envVarGroups:
         # IMPORTANT: You must set this value in the Render dashboard
         # It should be a long, random string.
         value: "your_super_secret_key_here"
+
