@@ -20,3 +20,5 @@ pydantic[email]
 python-socketio
 opencv-python-headless
 pdfplumber
+psycopg2-binary  # PostgreSQL driver
+gunicorn         # Production-grade web server
