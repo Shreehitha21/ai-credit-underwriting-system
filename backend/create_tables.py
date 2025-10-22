@@ -27,9 +27,14 @@ def main():
         print("Error: DATABASE_URL is not set. Cannot create tables.")
         sys.exit(1)
 
-    print("Connecting to database...")
+    print("Connecting to database to create tables...")
     try:
-        engine = create_engine(DATABASE_URL)
+        # We add connect_args for PostgreSQL in production
+        if DATABASE_URL.startswith("postgres"):
+            engine = create_engine(DATABASE_URL, echo=True)
+        else:
+            engine = create_engine(DATABASE_URL, echo=True, connect_args={"check_same_thread": False})
+        
         SQLModel.metadata.create_all(engine)
         print("Database tables created successfully.")
     except Exception as e:
@@ -38,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
