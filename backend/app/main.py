@@ -46,7 +46,7 @@ socket_app = socketio.ASGIApp(sio)
 @app.on_event("startup")
 def on_startup():
     """On server startup, create database tables and pre-train the AI model."""
-    create_db_and_tables()
+    
     train_and_save_model()
 
 # 6. Mount static file directories FIRST.
