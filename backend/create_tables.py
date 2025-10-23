@@ -34,7 +34,8 @@ def main():
     retries = 5
     while retries > 0:
         try:
-            engine = create_engine(DATABASE_URL, echo=True)
+            # Use echo=False for cleaner production logs
+            engine = create_engine(DATABASE_URL, echo=False)
             SQLModel.metadata.create_all(engine)
             print("Database tables created successfully.")
             return # Success
