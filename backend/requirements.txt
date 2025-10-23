@@ -6,8 +6,8 @@ SQLModel==0.0.22
 passlib[bcrypt]==1.7.4
 bcrypt==3.2.2
 
-# Common utilities
-python-dotenv==1.0.1fastapi
+python-dotenv==1.0.1
+fastapi
 python-multipart
 pytesseract
 Pillow
