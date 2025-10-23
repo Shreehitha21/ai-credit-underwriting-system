@@ -1,5 +1,7 @@
  
 # AI-Powered Loan Eligibility Advisory System
+demo video: https://drive.google.com/file/d/1HUjIm4oGDf9BhR7Thco1qSdC4UAkxo6U/view?usp=drive_link
+deploy link: https://ai-credit-underwriting-system.onrender.com
 
 This is a complete, real-time credit underwriting application designed for a banking environment. It uses a sophisticated AI model, intelligent document analysis (OCR), and a voice-enabled chatbot to automate and enhance the loan approval workflow.
 
