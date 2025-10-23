@@ -1,8 +1,13 @@
-fastapi
-uvicorn[standard]
-sqlmodel
-python-jose[cryptography]
-passlib[bcrypt]
+fastapi==0.115.0
+uvicorn==0.30.0
+SQLModel==0.0.22
+
+# Auth dependencies (PINNED)
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.2
+
+# Common utilities
+python-dotenv==1.0.1fastapi
 python-multipart
 pytesseract
 Pillow
